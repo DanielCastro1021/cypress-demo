@@ -1,38 +1,91 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.App-bg {
+  min-height: 100vh;
+  background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background: rgba(40, 44, 52, 0.92);
+  padding: 2.5em 0 1.5em 0;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 2px 12px rgba(40, 44, 52, 0.08);
 }
 
-.App-link {
-  color: #61dafb;
+.App-logo {
+  height: 80px;
+  margin-bottom: 0.5em;
+  animation: App-logo-spin infinite 18s linear;
+}
+
+.App-title {
+  font-size: 2.5em;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 0.2em;
+}
+
+.App-desc {
+  font-size: 1.2em;
+  color: #e0c3fc;
+  margin-bottom: 0.5em;
+}
+
+.App-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2em 0;
+}
+
+.App-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(140, 100, 220, 0.13);
+  padding: 2.5em 2em 2em 2em;
+  min-width: 340px;
+  max-width: 400px;
+  text-align: center;
+  margin: 0 1em;
+  animation: fadeInUp 0.7s cubic-bezier(.23, 1.01, .32, 1) 0.1s both;
+}
+
+.App-card h2 {
+  font-size: 1.5em;
+  margin-bottom: 1em;
+  color: #8ec5fc;
+}
+
+.App-footer {
+  text-align: center;
+  padding: 1.2em 0 1em 0;
+  color: #444;
+  font-size: 1em;
+  background: rgba(255, 255, 255, 0.7);
+  border-top: 1px solid #e0c3fc;
 }
 
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
