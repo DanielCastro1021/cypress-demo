@@ -1,70 +1,121 @@
-# Getting Started with Create React App
+# Cypress Testing Tutorial with React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This tutorial will guide you through creating a simple React app, adding a component with some flair, and writing Cypress tests for it.
 
-## Available Scripts
+## 1. Setup: Create a React App
 
-In the project directory, you can run:
+```bash
+npx create-react-app cypress-demo
+cd cypress-demo
+```
 
-### `npm start`
+## 2. Add a Fancy Component
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Create a new file: `src/FancyButton.js`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```jsx
+import React, { useState } from "react";
+import "./FancyButton.css";
 
-### `npm test`
+export default function FancyButton() {
+  const [clicked, setClicked] = useState(false);
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  return (
+    <button
+      className={clicked ? "fancy clicked" : "fancy"}
+      onClick={() => setClicked(true)}
+      data-testid="fancy-btn"
+    >
+      {clicked ? "Clicked!" : "Click Me"}
+    </button>
+  );
+}
+```
 
-### `npm run build`
+Create a CSS file: `src/FancyButton.css`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```css
+.fancy {
+  background: linear-gradient(90deg, #ff8a00, #e52e71);
+  color: white;
+  border: none;
+  padding: 1em 2em;
+  font-size: 1.2em;
+  border-radius: 8px;
+  transition: box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.fancy.clicked {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(90deg, #43cea2, #185a9d);
+}
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Update `src/App.js` to use the button:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```jsx
+import FancyButton from "./FancyButton";
 
-### `npm run eject`
+function App() {
+  return (
+    <div className="App">
+      <h1>Test the Fancy Button!</h1>
+      <FancyButton />
+    </div>
+  );
+}
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+export default App;
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 3. Install Cypress
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+npm install --save-dev cypress
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Open Cypress for the first time:
 
-## Learn More
+```bash
+npx cypress open
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 4. Add Your First Test
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Create a test file: `cypress/e2e/fancy_button.cy.js`
 
-### Code Splitting
+```js
+describe("FancyButton", () => {
+  it("renders and can be clicked", () => {
+    cy.visit("http://localhost:3000");
+    cy.get('[data-testid="fancy-btn"]').should("contain", "Click Me");
+    cy.get('[data-testid="fancy-btn"]').click();
+    cy.get('[data-testid="fancy-btn"]').should("contain", "Clicked!");
+    cy.get('[data-testid="fancy-btn"]').should("have.class", "clicked");
+  });
+});
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 5. Run the App and Tests
 
-### Analyzing the Bundle Size
+Start the React app:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+npm start
+```
 
-### Making a Progressive Web App
+In another terminal, run Cypress:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+npx cypress open
+```
 
-### Advanced Configuration
+Select your test and watch it run!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 6. Next Steps
 
-### Deployment
+- Try adding more interactive components.
+- Test edge cases (double clicks, keyboard navigation, etc).
+- Explore Cypress commands like `.type()`, `.should()`, `.contains()`, etc.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
