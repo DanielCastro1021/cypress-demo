@@ -14,8 +14,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:no-browser": "BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:e2e": "start-server-and-test start:no-browser http://localhost:3000 cypress:run",
     "eject": "react-scripts eject",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
@@ -40,6 +42,7 @@
   },
   "devDependencies": {
     "cypress": "^15.1.0",
-    "cypress-real-events": "^1.15.0"
+    "cypress-real-events": "^1.15.0",
+    "start-server-and-test": "^2.1.0"
   }
 }
